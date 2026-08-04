@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Smart Placement Predictor</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <h1>🎓 SMART PLACEMENT PREDICTOR</h1>
+        <p>Predict Placement, Career, Companies and Skill Gaps</p>
+    </div>
+
+    <div class="form-section">
+
+        <form action="/predict" method="POST">
+
+            <input type="number" step="0.01"
+                   name="cgpa"
+                   placeholder="CGPA"
+                   required>
+
+            <input type="number"
+                   name="programming_skill"
+                   placeholder="Programming Skill (1-10)"
+                   required>
+
+            <input type="number"
+                   name="communication_skill"
+                   placeholder="Communication Skill (1-10)"
+                   required>
+
+            <input type="number"
+                   name="aptitude_score"
+                   placeholder="Aptitude Score"
+                   required>
+
+            <input type="number"
+                   name="projects_count"
+                   placeholder="Projects Count"
+                   required>
+
+            <input type="number"
+                   name="internships_count"
+                   placeholder="Internships Count"
+                   required>
+
+            <select name="language" required>
+                <option value="">Select Programming Language</option>
+                <option value="C">C</option>
+                <option value="C++">C++</option>
+                <option value="Java">Java</option>
+                <option value="Python">Python</option>
+                <option value="SQL">SQL</option>
+                <option value="DBMS">DBMS</option>
+                <option value="Data Structures">Data Structures</option>
+                <option value="JavaScript">JavaScript</option>
+            </select>
+
+            <button type="submit">
+                Predict
+            </button>
+
+        </form>
+
+    </div>
+
+    {% if prediction %}
+
+    <div class="dashboard">
+
+        <!-- LEFT PANEL -->
+
+        <div class="left-panel">
+
+            <div class="card input-card">
+
+                <h2>📋 INPUT DETAILS</h2>
+
+                <div class="input-item">
+                    <span>CGPA</span>
+                    <span>{{ cgpa }}</span>
+                </div>
+
+                <div class="input-item">
+                    <span>Programming Skill</span>
+                    <span>{{ programming_skill }}/10</span>
+                </div>
+
+                <div class="input-item">
+                    <span>Communication Skill</span>
+                    <span>{{ communication_skill }}/10</span>
+                </div>
+
+                <div class="input-item">
+                    <span>Aptitude Score</span>
+                    <span>{{ aptitude_score }}</span>
+                </div>
+
+                <div class="input-item">
+                    <span>Projects Count</span>
+                    <span>{{ projects_count }}</span>
+                </div>
+
+                <div class="input-item">
+                    <span>Internships Count</span>
+                    <span>{{ internships_count }}</span>
+                </div>
+
+                <div class="input-item">
+                    <span>Programming Language</span>
+                    <span>{{ language }}</span>
+                </div>
+
+            </div>
+
+            <div class="card tip-card">
+
+                <h2>💡 Tip</h2>
+
+                <p>
+                    Keep improving your skills and build more
+                    projects to increase your placement chances.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT PANEL -->
+
+        <div class="right-panel">
+
+            <div class="card status-card">
+
+                <div class="status-left">
+
+                    <h1>{{ prediction }}</h1>
+
+                    <p>
+                        Great Job! You have a good chance
+                        of getting placed.
+                    </p>
+
+                </div>
+
+                <div class="status-right">
+
+                    <h3>PLACEMENT CHANCE</h3>
+
+                    <h1>{{ probability }}%</h1>
+
+                </div>
+
+            </div>
+
+            <div class="result-grid">
+
+                <!-- CAREER -->
+
+                <div class="card career-card">
+
+                    <h2>💼 RECOMMENDED CAREER</h2>
+
+                    <h3>{{ career }}</h3>
+
+                </div>
+
+                <!-- COMPANIES -->
+
+                <div class="card company-card">
+
+                    <h2>🏢 RECOMMENDED COMPANIES</h2>
+
+                    <ul>
+                        {% for company in companies %}
+                        <li>{{ company }}</li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+
+                <!-- SKILLS -->
+
+                <div class="card skills-card">
+
+                    <h2>📈 SKILLS TO IMPROVE</h2>
+
+                    <ul>
+                        {% for skill in skills %}
+                        <li>{{ skill }}</li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+
+                <!-- STRENGTHS -->
+
+                <div class="card strength-card">
+
+                    <h2>⭐ YOUR STRENGTHS</h2>
+
+                    <ul>
+                        {% for item in strengths %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+
+                </div>
+
+            </div>
+
+            <button class="download-btn">
+                ⬇ DOWNLOAD REPORT
+            </button>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
